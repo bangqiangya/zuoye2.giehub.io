@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+		#app {
+			width: 600px;
+			margin: 50px auto;
+		}
+
+		fieldset {
+			border: 1px solid orange;
+		}
+
+		fieldset input {
+			width: 200px;
+			height: 30px;
+			margin: 10px;
+		}
+
+		table {
+			width: 600px;
+			border: 2px solid orange;
+			margin-top: 20px;
+			text-align: center;
+		}
+
+		thead {
+			background: orange;
+		}
+	</style>
+</head>
+<body>
+    
+	<script src="./vue.js"></script>
+	<div id="app">
+		<fieldset id="">
+			<legend>学生信息录入系统</legend>
+			<div>
+				<span>姓名：</span>
+                <input type="text" placeholder="请输入姓名" v-model="personObj.name" />
+			</div>
+			<div>
+				<span>年龄：</span>
+				<input type="text" placeholder="请输入年龄" v-model="personObj.age" />
+			</div>
+			<div>
+				<span>性别：</span>
+				<select v-model="personObj.sex">
+					<option value="男">男</option>
+					<option value="女">女</option>
+				</select>
+			</div>
+			<div>
+				<span>身份证 ：</span>
+				<input type="text" placeholder="请输入身份证号码" v-model="personObj.phone" />
+			</div><div>
+				<span>家庭住址 ：</span>
+				<input type="text" placeholder="请输入家庭住址" v-model="personObj.phone" />
+			</div>
+			
+			<button @click="addStudents()">创建新用户</button>
+		</fieldset>
+		<!-- 表格-->
+		<table>
+			<thead>
+				<tr>
+					<th>姓名</th>
+					<th>性别/年龄</th>
+					<th>身份证</th>
+					<th>家庭住址</th>
+					<th>删除</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="(item,index) in personList">
+					<td>{{item.name}}</td>
+					<td>{{item.sex}}</td>
+					<td>{{item.age}}</td>
+					<td>{{item.phone}}</td>
+					<td>
+						<button type="button" @click="remove(index)">删除</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<script type="text/javascript">
+		var vm = new Vue({
+			el: "#app",
+			data: {
+				personList: [{
+					name: "哆啦A梦",
+					sex: "男/20",
+					age: 371321200103020001,
+					phone: 1888888888
+				}, {
+					name: "大熊",
+					sex: "男/21",
+					age: 371321200103020001,
+					phone: 18888888888
+				}, {
+					name: "李兰",
+					sex: "女/22",
+					age: 371321200103020001,
+					phone: 1888888892532
+				}, {
+					name: "五道口",
+					sex: "男/23",
+					age: 371321200103020001,
+					phone: 18888888
+				},
+
+				],
+				personObj: {
+					name: '',
+					sex: '男',
+					age: 0,
+					phone: ''
+				}
+			},
+			methods: {
+				addStudents: function () {
+					console.log(1);
+					if (this.personObj.name == '') {
+						alert('请输入姓名！');
+						return;
+					}
+					if (this.personObj.age < 4 || this.personObj.age == '') {
+						alert('请输入年龄！');
+						return;
+					}
+					if (this.personObj.phone == '') {
+						alert('请输入手机号码！');
+						return;
+					}
+					//添加数据
+					this.personList.unshift(this.personObj);
+					//恢复默认
+					this.personObj = {
+						name: '',
+						sex: '男',
+						age: 0,
+						phone: ''
+					}
+				},
+				//删除数据
+				remove: function (index) {
+					console.log(index);
+					this.personList.splice(index, 1);
+				}
+			}
+		})
+	</script>
+</body>
+</html>
